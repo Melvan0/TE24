@@ -70,11 +70,11 @@ def hand_value(hand):
     hand_value = 0
     for card in hand: #for every card in the hand, the program does the following
         print(card)
+        #print(card[0])
         if card[0] != 'ace': #index 0 is always the value of the card and therefore can be used to identify aces
-            print(value[card[0]])
+            #print(value[card[0]])
             hand_value += value[card[0]]
-    #an ace needs to be processed differently
-    for card[0] in hand:
+    #an ace needs to be processed differently    
         if card[0] == 'ace':
             if 21 > hand_value + 11:
                 hand_value += 1
@@ -88,9 +88,10 @@ def hand_value(hand):
 
 #print(used_cards)
 deal(phand)
+print(phand)
 hand_value(phand)
-deal(phand)
-phand_value(phand)
+print(phand)
+hand_value(phand)
 print(phand)
 
 #for card in phand:
@@ -101,8 +102,6 @@ print(phand)
 #print(phand)
 #hand_value(phand)
 #print(phand)
-
-
 
 #print("test")
 #os.system('cls')
