@@ -87,12 +87,6 @@ def hand_value(hand):
 #hand_value(dhand)
 
 #print(used_cards)
-deal(phand)
-print(phand)
-hand_value(phand)
-print(phand)
-hand_value(phand)
-print(phand)
 
 #for card in phand:
     #print(card)
