@@ -51,6 +51,7 @@ phand = []
 #phand_value = 0
 #dealer hand and value
 dhand = []
+hidden_card = []
 #dhand_value = 0
 
 #function for dealing into a hand
@@ -61,31 +62,54 @@ def deal(hand):
         if used_cards.count([temp_value, temp_suit]) < 4: #if the value and suit has been used less than 4 times it can be used, otherwise it draws another value and suit
             temp_card = [temp_value, temp_suit] #the value and suit are put together into a card
             used_cards.append(temp_card) #adds the card into a list of used cards
-            break
+            break #stops the loop
     #hand.append(temp_card)
     hand.append(' '.join(temp_card)) #adds the card to the hand which is being dealt to
 
 #function for calculating the value of a hand
 def hand_value(hand):
     hand_value = 0
-    for card in hand: #for every card in the hand, the program does the following
+    for card in hand: #for every card in the hand:
         split_card = card.split(' ')[0] #splits the card at the space and saves only the first part which is the value of the card
-        if split_card != 'Ace': #if the value of the card is not an ace the program does the following
+        if split_card != 'Ace': #if the value of the card is not an ace:
             hand_value += value[split_card] #adds the value of the card to the hand value
-        if split_card == 'Ace': #an ace needs to be processed differently
-            if 21 > hand_value + value['Ace'][0]:
-                hand_value += value['Ace'][1]
-            elif 21 <= hand_value + value['Ace'][0]:
-                hand_value += value['Ace'][0]
-    hand_len = len(hand)
-    print((', '.join(hand[:hand_len])), f"\nValue of hand: {hand_value}")
+        elif split_card == 'Ace': #if the value of the card is an ace:
+            hand_value += value[split_card][0] #adds the value of the card to the hand value
+    hand_len = len(hand) #checks how many elements are in the hand
+    #print((', '.join(hand[:hand_len])), f"\nValue of hand: {hand_value}") #prints all the elements in the hand, used for testing
+    if hand_value > 21: #if the value of the hand is more than 21:
+        for card in hand: #for every card in the hand:
+            split_card = card.split(' ')[0] #splits the card at the space and saves only the first part which is the value of the card
+            if split_card == 'Ace': #if the value is an ace:
+                hand_value -= (value['Ace'][0] - value ['Ace'][1]) #the value of the ace is changed from 11 to 1 
+                if hand_value <= 21: #if the value of the hand is 21 or less:
+                    break #breaks the loop
+    hand_len = len(hand) #checks how many elements are in the hand
+    if hand == phand: #if the function is called with the players hand:
+        print((', '.join(hand[:hand_len])), f"\nValue of hand: {hand_value}") #prints all the cards in the hand
+    if hand == dhand: #if the function is called with the dealers hand:
+        hidden_card.append(hand[1]) #adds the dealers second card to the hidden_card list to remember it 
+        if hand[1].split(' ')[0] == 'Ace': #if the second card in the hand is an ace:
+            hand_value -= value[hand[1].split(' ')[0]][0] #remove the value of the ace from the value of the hand
+        else:
+            hand_value -= value[hand[1].split(' ')[0]] #removes the hidden cards value from the value of the hand
+        print(hidden_card) #prints the hidden card, used only for testing
+        hand[1] = "Hidden" #changes the second card into a hidden one
+        print((', '.join(hand[:hand_len])), f"\nValue of hand: {hand_value}") #prints all the elements of the hand
 
+#deal(phand)
 deal(phand)
 deal(phand)
 print(phand)
+hand_value(phand)
+print(" ")
+deal(dhand)
+deal(dhand)
+print(dhand)
+hand_value(dhand)
 
 #print(', '.join(phand[:hand_len]))
-hand_value(phand)
+#hand_value(phand)
 #print(phand[0].split(' ')[0])
 #print(value['Ace'][1])
 
