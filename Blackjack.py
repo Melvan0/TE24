@@ -48,10 +48,10 @@ used_cards = []
 
 #players hand and value
 phand = []
-phand_value = 0
+#phand_value = 0
 #dealer hand and value
 dhand = []
-dhand_value = 0
+#dhand_value = 0
 
 #function for dealing into a hand
 def deal(hand):
@@ -62,27 +62,33 @@ def deal(hand):
             temp_card = [temp_value, temp_suit] #the value and suit are put together into a card
             used_cards.append(temp_card) #adds the card into a list of used cards
             break
-    hand.append(temp_card)
-    #hand.append(' '.join(temp_card)) #adds the card to the hand which is being dealt to
+    #hand.append(temp_card)
+    hand.append(' '.join(temp_card)) #adds the card to the hand which is being dealt to
 
 #function for calculating the value of a hand
 def hand_value(hand):
     hand_value = 0
     for card in hand: #for every card in the hand, the program does the following
-        print(card)
-        #print(card[0])
-        if card[0] != 'ace': #index 0 is always the value of the card and therefore can be used to identify aces
-            #print(value[card[0]])
-            hand_value += value[card[0]]
-    #an ace needs to be processed differently    
-        if card[0] == 'ace':
-            if 21 > hand_value + 11:
-                hand_value += 1
-            elif 21 <= hand_value + 11:
-                hand_value += 11
+        split_card = card.split(' ')[0] #splits the card at the space and saves only the first part which is the value of the card
+        if split_card != 'Ace': #if the value of the card is not an ace the program does the following
+            hand_value += value[split_card] #adds the value of the card to the hand value
+        if split_card == 'Ace': #an ace needs to be processed differently
+            if 21 > hand_value + value['Ace'][0]:
+                hand_value += value['Ace'][1]
+            elif 21 <= hand_value + value['Ace'][0]:
+                hand_value += value['Ace'][0]
+    hand_len = len(hand)
+    print((', '.join(hand[:hand_len])), f"\nValue of hand: {hand_value}")
 
-    print(hand_value)
-        
+deal(phand)
+deal(phand)
+print(phand)
+
+#print(', '.join(phand[:hand_len]))
+hand_value(phand)
+#print(phand[0].split(' ')[0])
+#print(value['Ace'][1])
+
 #hand_value(phand)
 #hand_value(dhand)
 
@@ -93,8 +99,6 @@ def hand_value(hand):
     #if card[0] in value:
         #print(value[card[0]])
 
-#print(phand)
-#hand_value(phand)
 #print(phand)
 
 #print("test")
